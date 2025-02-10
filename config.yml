@@ -1,0 +1,19 @@
+routes:
+- endpoint: /hello
+  response:
+    message: Hello, WEBHKP!
+- endpoint: /status
+  response:
+    status: Mock server is running
+- endpoint: /first
+  response:
+    message: aabbcc
+    status: success
+- endpoint: /second
+  response:
+    message: aaabbb
+    status: success
+- endpoint: /third
+  response:
+    message: "{abc\r\nasdflkj\r\nasdf\r\nasdf\r\n}"
+    status: success

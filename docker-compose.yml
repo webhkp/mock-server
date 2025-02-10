@@ -1,0 +1,9 @@
+services:
+  mock-server:
+    build: .
+    ports:
+      - "8181:8000"
+    volumes:
+      - ./app:/app
+      - ./config.yml:/app/config.yml
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload

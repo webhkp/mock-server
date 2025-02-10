@@ -1,0 +1,53 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.dylib
+*.egg
+*.eggs
+dist/
+build/
+eggs/
+*.egg-info/
+*.venv/
+*.env
+*.db
+*.sqlite3
+*.log
+
+# FastAPI
+*.sqlite3
+
+# Docker
+# *.dockerignore
+# Dockerfile
+# docker-compose.yml
+# **/Dockerfile
+# **/docker-compose.yml
+
+# Pytest
+*.cover
+*.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.hypothesis/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Virtual Environments
+.vscode/
+.idea/
+*.env
+
+# macOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+
+# Configuration Files
+app/config.yml
