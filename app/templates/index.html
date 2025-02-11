@@ -1,146 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/static/favicon.png" type="image/x-icon" />
 
     <title>Mock Server Config Viewer</title>
+
+    <script src="/static/alpine.js" defer></script>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
 
-        .header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+      .header {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 40px;
+      }
 
-        .footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            clear: both;
-        }
+      .footer {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        clear: both;
+        margin-top: 60px;
+      }
 
+      hr {
+        margin: 60px 0;
+      }
+
+      form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        height: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        appearance: none;
+      }
+
+      textarea {
+        width: 100%;
+        height: 60px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        appearance: none;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        height: 40px;
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #555;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      select {
+        width: 100%;
+        height: 40px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px;
+      }
+
+      select:hover {
+        border-color: #888;
+      }
+
+      select:focus {
+        outline: none;
+        border-color: #333;
+      }
+
+      @media only screen and (max-width: 768px) {
         form {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          margin: 10px auto;
         }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            height: 40px;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 40px;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button[type="submit"] {
-            width: 100%;
-            height: 40px;
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #555;
-        }
-
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+          font-size: 14px;
         }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        @media only screen and (max-width: 768px) {
-            form {
-                margin: 10px auto;
-            }
-            table {
-                font-size: 14px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
-        <h1>Mock Server Config Viewer</h1>
+      <h1>Mock Server Config Viewer</h1>
     </div>
 
-    <form action="/add-route" method="post">
-        <h2>Add New Route</h2>
-        <label>Endpoint:</label>
-        <input type="text" name="endpoint" required placeholder="/example" />
-        <br />
-        <label>Response Message:</label>
-        <textarea name="response_message" required placeholder="Hello, World!" cols="30"></textarea>
-        <br />
-        <button type="submit">Add Route</button>
+    <form
+      id="jsonForm"
+      action="/add-route"
+      method="post"
+      x-data="{ jsonData: '', isValidJson: true, endpoint: '', status: '200', methods: ['GET'] }"
+      @submit.prevent="validateJson()"
+    >
+      <label>Select HTTP Methods:</label><br />
+      <div>
+        <label
+          ><input type="checkbox" value="GET" x-model="methods" /> GET</label
+        ><br />
+        <label
+          ><input type="checkbox" value="POST" x-model="methods" /> POST</label
+        ><br />
+        <label
+          ><input type="checkbox" value="PUT" x-model="methods" /> PUT</label
+        ><br />
+        <label
+          ><input type="checkbox" value="DELETE" x-model="methods" />
+          DELETE</label
+        ><br />
+        <label
+          ><input type="checkbox" value="PATCH" x-model="methods" />
+          PATCH</label
+        ><br />
+        <label
+          ><input type="checkbox" value="OPTIONS" x-model="methods" />
+          OPTIONS</label
+        >
+      </div>
+      <br /><br />
+
+      <label for="endpoint">Endpoint:</label><br />
+      <input
+        type="text"
+        id="endpoint"
+        name="endpoint"
+        x-model="endpoint"
+        required
+        placeholder="/users"
+      />
+      <br /><br />
+
+      <label for="jsonInput">Enter JSON Data:</label><br />
+      <textarea
+        id="jsonInput"
+        name="response_message"
+        placeholder='{"key": "value"}'
+        x-model="jsonData"
+        @input="isValidJson = isValid(jsonData)"
+      >
+      </textarea>
+      <p x-show="!isValidJson" style="color: red">Invalid JSON format.</p>
+      <br /><br />
+
+      <label for="status">Status:</label><br />
+      <select id="status" name="response_status" x-model="status" required>
+        <option value="200">200 - OK</option>
+        <option value="201">201 - Created</option>
+        <option value="400">400 - Bad Request</option>
+        <option value="401">401 - Unauthorized</option>
+        <option value="403">403 - Forbidden</option>
+        <option value="404">404 - Not Found</option>
+        <option value="500">500 - Internal Server Error</option>
+      </select>
+      <br /><br />
+
+      <button type="submit">Submit</button>
     </form>
 
-    <h2>Current Config</h2>
+    <hr />
+
+    <h2>Current Route Config</h2>
     <table>
-        <thead>
-            <tr>
-                <th>Endpoint</th>
-                <th>Response</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for route_data in routes_data %}
-            <tr>
-                <td>{{ route_data.get('endpoint') }}</td>
-                <td>{{ route_data.get('response') }}</td>
-                <td>{{ route_data.get('status') }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
+      <thead>
+        <tr>
+          <th>Endpoint</th>
+          <th>Response</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for route_data in routes_data %}
+        <tr>
+          <td>{{ route_data.get('endpoint') }}</td>
+          <td>{{ route_data.get('response') }}</td>
+          <td>{{ route_data.get('status') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
 
     <div class="footer">
-        <p>&copy;  {{ current_year }} Mock Server Config Viewer</p>
+      <p>&copy; {{ current_year }} Mock Server Config Viewer</p>
     </div>
-</body>
+
+    <script>
+      function validateJson() {
+        const form = document.getElementById("jsonForm");
+        const jsonData = form.response_message.value;
+
+        if (isValid(jsonData)) {
+          form.submit();
+        } else {
+          alert("Invalid JSON format. Please correct it.");
+        }
+      }
+
+      function isValid(jsonString) {
+        try {
+          JSON.parse(jsonString);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+    </script>
+  </body>
 </html>
