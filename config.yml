@@ -1,10 +1,14 @@
 routes:
-  - endpoint: /hello
-    response:
-      message: Hello, Mock Server!
-    status: 200
-  - endpoint: /status
-    response:
-      message: available
-      status: ok
-    status: 200
+- endpoint: hello
+  methods:
+  - GET
+  response:
+    message: Hello, Mock Server!
+  status: 200
+- endpoint: status
+  methods:
+  - GET
+  response:
+    message: available
+    status: ok
+  status: 200
