@@ -6,6 +6,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from datetime import date
 import json
+from typing import List
 
 app = FastAPI()
 
@@ -56,7 +57,7 @@ def add_route(
     endpoint: str = Form(...),
     response_message: str = Form(...),
     response_status: int = Form(...),
-    methods: list = Form([]),
+    methods: List[str] = Form(...),
 ):
     if endpoint.startswith("/"):
         endpoint = endpoint[1:]

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/static/favicon.png" type="image/x-icon" />
 
-    <title>Mock Server Config Viewer</title>
+    <title>Mock Server Config</title>
 
     <script src="/static/alpine.js" defer></script>
 
@@ -153,24 +153,57 @@
       <label>Select HTTP Methods:</label><br />
       <div>
         <label
-          ><input type="checkbox" value="GET" x-model="methods" /> GET</label
+          ><input
+            type="checkbox"
+            value="GET"
+            name="methods"
+            x-model="methods"
+          />
+          GET</label
         ><br />
         <label
-          ><input type="checkbox" value="POST" x-model="methods" /> POST</label
+          ><input
+            type="checkbox"
+            value="POST"
+            name="methods"
+            x-model="methods"
+          />
+          POST</label
         ><br />
         <label
-          ><input type="checkbox" value="PUT" x-model="methods" /> PUT</label
+          ><input
+            type="checkbox"
+            value="PUT"
+            name="methods"
+            x-model="methods"
+          />
+          PUT</label
         ><br />
         <label
-          ><input type="checkbox" value="DELETE" x-model="methods" />
+          ><input
+            type="checkbox"
+            value="DELETE"
+            name="methods"
+            x-model="methods"
+          />
           DELETE</label
         ><br />
         <label
-          ><input type="checkbox" value="PATCH" x-model="methods" />
+          ><input
+            type="checkbox"
+            value="PATCH"
+            name="methods"
+            x-model="methods"
+          />
           PATCH</label
         ><br />
         <label
-          ><input type="checkbox" value="OPTIONS" x-model="methods" />
+          ><input
+            type="checkbox"
+            value="OPTIONS"
+            name="methods"
+            x-model="methods"
+          />
           OPTIONS</label
         >
       </div>
@@ -221,6 +254,7 @@
       <thead>
         <tr>
           <th>Endpoint</th>
+          <th>Methods</th>
           <th>Response</th>
           <th>Status</th>
         </tr>
@@ -229,6 +263,7 @@
         {% for route_data in routes_data %}
         <tr>
           <td>{{ route_data.get('endpoint') }}</td>
+          <td>{{ route_data.get('methods') }}</td>
           <td>{{ route_data.get('response') }}</td>
           <td>{{ route_data.get('status') }}</td>
         </tr>
@@ -244,17 +279,23 @@
       function validateJson() {
         const form = document.getElementById("jsonForm");
         const jsonData = form.response_message.value;
+        const selectedMethods = [
+          ...form.querySelectorAll('input[name="methods"]:checked'),
+        ].map((cb) => cb.value);
 
-        if (isValid(jsonData)) {
-          form.submit();
-        } else {
+        if (!isValid(jsonData)) {
           alert("Invalid JSON format. Please correct it.");
+        } else if (selectedMethods.length === 0) {
+          alert("Please select at least one method.");
+        } else {
+          form.submit();
         }
       }
 
       function isValid(jsonString) {
         try {
           JSON.parse(jsonString);
+
           return true;
         } catch {
           return false;
